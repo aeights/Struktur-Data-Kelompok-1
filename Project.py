@@ -4,10 +4,10 @@ import csv
 import pandas as pd
 import prettytable
 
-def read():
-    with open("D:/Data/[Informatika]/Semester 3/Struktur Data/Struktur-Data-Kelompok-1/account.csv",'r') as file:
-        reader = prettytable.from_csv(file)
-    print(reader)
+# def read():
+#     with open("D:/Data/[Informatika]/Semester 3/Struktur Data/Struktur-Data-Kelompok-1/account.csv",'r') as file:
+#         reader = prettytable.from_csv(file)
+#     print(reader)
 
 class Node:
     def __init__(self, data):
@@ -202,7 +202,7 @@ def daftar():
     os.system("cls")
     username = input("Masukkan Username Anda: ")
     password = input("Masukkan Password Anda: ")
-    list_account.insert_at_start({"username":username,"password":password})
+    list_account.insert_at_end({"username":username,"password":password})
     n = input("Tekan Enter Untuk Kembali Ke Menu")
     os.system("cls")
     menu()
@@ -225,7 +225,7 @@ def edit():
         list_account.delete_element_by_value(username)
         new_username = input("Masukkan Username Baru: ")
         new_password = input("Masukkan Password Baru: ")
-        list_account.insert_at_start({"username":new_username,"password":new_password})
+        list_account.insert_at_end({"username":new_username,"password":new_password})
         print("Akun Berhasil Di Edit")
     elif list_account.search_username(username) == False:
         print("Username tidak ditemukan, Coba lagi")
@@ -251,11 +251,12 @@ def hapus():
 def show_account():
     list_account.traverse_list()
     n = input("Tekan Enter Untuk Kembali Ke Menu")
+    os.system("cls")
     menu()
 
 # Membuat Node Account
 account = Node(5)
 list_account = LinkedList()
 
-# menu()
+menu()
 # read()
