@@ -4,10 +4,31 @@ import csv
 import pandas as pd
 import prettytable
 
-# def read():
-#     with open("D:/Data/[Informatika]/Semester 3/Struktur Data/Struktur-Data-Kelompok-1/account.csv",'r') as file:
-#         reader = prettytable.from_csv(file)
-#     print(reader)
+path_csv = "D:/Data/[Informatika]/Semester 3/Struktur Data/Struktur-Data-Kelompok-1/account.csv"
+
+def read():
+    with open(path_csv,'r') as file:
+        csvreader = csv.reader(file)
+        for i in csvreader:
+            data_csv = list(map(lambda i :
+            {
+                "username" : i[0],
+                "password" : i[1],
+            }, csvreader))
+    print(data_csv)
+
+def write(username,password):
+    with open(path_csv, 'a') as file:
+            tulis = csv.writer(file)
+            tulis.writelines(f'{username},{password}')
+
+def readpd():
+    data = pd.read_csv(path_csv)
+    data_csv = pd.DataFrame(data)
+    print(data_csv)
+
+def writepd(username,password):
+    data = pd.read_csv(path_csv)
 
 class Node:
     def __init__(self, data):
@@ -174,12 +195,12 @@ class LinkedList:
 # Acoount Management
 def menu():
     print("SELAMAT DATANG")
-    print("1. Daftar")
-    print("2. Login")
-    print("3. Edit")
-    print("4. Hapus")
-    print("5. Show")
-    print("6. Exit")
+    print("[1]> Daftar")
+    print("[2]> Login")
+    print("[3]> Edit")
+    print("[4]> Hapus")
+    print("[5]> Show")
+    print("[0]> Keluar")
     choice = int(input("Pilih Menu: "))
     if choice == 1:
         daftar()
@@ -198,14 +219,14 @@ def menu():
         os.system("cls")
         menu()
 
-def daftar():
+def daftar(username,password):
     os.system("cls")
-    username = input("Masukkan Username Anda: ")
-    password = input("Masukkan Password Anda: ")
+    # username = input("Masukkan Username Anda: ")
+    # password = input("Masukkan Password Anda: ")
     list_account.insert_at_end({"username":username,"password":password})
-    n = input("Tekan Enter Untuk Kembali Ke Menu")
-    os.system("cls")
-    menu()
+    # n = input("Tekan Enter Untuk Kembali Ke Menu")
+    # os.system("cls")
+    # menu()
 
 def login():
     os.system("cls")
@@ -250,13 +271,14 @@ def hapus():
 
 def show_account():
     list_account.traverse_list()
-    n = input("Tekan Enter Untuk Kembali Ke Menu")
-    os.system("cls")
-    menu()
+    # n = input("Tekan Enter Untuk Kembali Ke Menu")
+    # os.system("cls")
+    # menu()
 
-# Membuat Node Account
-account = Node(5)
+# List akun
 list_account = LinkedList()
 
-menu()
+# menu()
+# write(12,34)
 # read()
+# readpd()
