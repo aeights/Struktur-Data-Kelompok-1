@@ -4,10 +4,17 @@ app = Flask(__name__)
 # views = Blueprint('views', __name__)
 
 @app.route("/home", methods=['GET', 'POST'])
-def hello_world():
+def daftar_user():
     if request.method == "POST":
-        a = request.form.get("username")
-        print(a)
-        daftar(a,a)
-        show_account()
+        if request.form.get("u_daftar") and request.form.get("p_daftar"):
+            user = request.form.get("u_daftar")
+            pw = request.form.get("p_daftar")
+            daftar(user,pw)
+            show_account()
+
+        elif request.form.get("u_login") and request.form.get("p_login"):
+            user = request.form.get("u_login")
+            pw = request.form.get("p_login")
+            if login(user,pw) == True:
+                print("berhasil")
     return render_template("main.html")

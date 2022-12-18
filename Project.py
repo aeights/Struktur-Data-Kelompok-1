@@ -3,8 +3,10 @@ import time
 import csv
 import pandas as pd
 import prettytable
+import sqlite3
 
 path_csv = "D:/Data/[Informatika]/Semester 3/Struktur Data/Struktur-Data-Kelompok-1/account.csv"
+path_db = "D:/Data/[Informatika]/Semester 3/Struktur Data/Struktur-Data-Kelompok-1/account.db"
 
 def read():
     with open(path_csv,'r') as file:
@@ -219,25 +221,48 @@ def menu():
         os.system("cls")
         menu()
 
-def daftar(username,password):
-    os.system("cls")
+def load_db():
+    connect = sqlite3.connect(path_db)
+    getdata = connect.cursor()
+    data = getdata.execute("SELECT * FROM akun")
+    row = data.fetchall()
+    for i in row:
+        list_account.insert_at_end({"username":i[0],"password":i[1]})
+
+# def daftar(username,password):
+    # os.system("cls")
     # username = input("Masukkan Username Anda: ")
     # password = input("Masukkan Password Anda: ")
-    list_account.insert_at_end({"username":username,"password":password})
+    # list_account.insert_at_end({"username":username,"password":password})
     # n = input("Tekan Enter Untuk Kembali Ke Menu")
     # os.system("cls")
     # menu()
 
-def login():
-    os.system("cls")
-    username = input("Username: ")
-    password = input("Password: ")
+# def login():
+#     os.system("cls")
+#     username = input("Username: ")
+#     password = input("Password: ")
+#     if list_account.search_username(username) == True and list_account.search_password(password) == True:
+#         print("Login Berhasil")
+#     else: print("Login Gagal")
+#     n = input("Tekan Enter Untuk Kembali Ke Menu")
+#     os.system("cls")
+#     menu()
+
+def daftar(username,password):
+    list_account.insert_at_end({"username":username,"password":password})
+    connect=sqlite3.connect(path_db)
+    getdata=connect.cursor()
+    getdata.execute(f'INSERT INTO akun values("{username}","{password}")')
+    connect.commit()
+
+def login(username,password):
     if list_account.search_username(username) == True and list_account.search_password(password) == True:
         print("Login Berhasil")
-    else: print("Login Gagal")
-    n = input("Tekan Enter Untuk Kembali Ke Menu")
-    os.system("cls")
-    menu()
+        return True
+    else:
+        print("Login Gagal")
+        return False
 
 def edit():
     os.system("cls")
@@ -278,7 +303,8 @@ def show_account():
 # List akun
 list_account = LinkedList()
 
+
+load_db()
+show_account()
+
 # menu()
-# write(12,34)
-# read()
-# readpd()
