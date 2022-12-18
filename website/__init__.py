@@ -37,7 +37,7 @@ def hapus_akun():
 @app.route("/edit", methods=['GET', 'POST'])
 def edit_akun():
     if request.method == "POST":
-        print("sukses")
+        pass
     return render_template("home.html")
 
 @app.route("/home", methods=['GET', 'POST'])

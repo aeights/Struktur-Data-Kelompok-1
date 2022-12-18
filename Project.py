@@ -221,6 +221,7 @@ def menu():
         os.system("cls")
         menu()
 
+# Load Database
 def load_db():
     connect = sqlite3.connect(path_db)
     getdata = connect.cursor()
@@ -228,6 +229,53 @@ def load_db():
     row = data.fetchall()
     for i in row:
         list_account.insert_at_end({"username":i[0],"password":i[1]})
+
+# Account Management
+def daftar(username,password):
+    list_account.insert_at_end({"username":username,"password":password})
+    connect=sqlite3.connect(path_db)
+    getdata=connect.cursor()
+    getdata.execute(f'INSERT INTO akun values("{username}","{password}")')
+    connect.commit()
+
+def login(username,password):
+    if list_account.search_username(username) == True and list_account.search_password(password) == True:
+        # print("Login Berhasil")
+        return True
+    else:
+        # print("Login Gagal")
+        return False
+
+def hapus(username,password):
+    if list_account.search_username(username) == True and list_account.search_password(password) == True:
+        list_account.delete_element_by_value(username)
+        connect=sqlite3.connect(path_db)
+        getdata=connect.cursor()
+        getdata.execute(f'DELETE FROM akun WHERE username="{username}" AND password="{password}"')
+        connect.commit()
+        return True
+    else:
+        print("Akun salah")
+        return False
+
+def edit(username,new_username,new_password):
+    if list_account.search_username(username) == True:
+        list_account.delete_element_by_value(username)
+        connect=sqlite3.connect(path_db)
+        getdata=connect.cursor()
+        getdata.execute(f'DELETE FROM akun WHERE username="{username}"')
+        connect.commit()
+
+        list_account.insert_at_end({"username":new_username,"password":new_password})
+        connect=sqlite3.connect(path_db)
+        getdata=connect.cursor()
+        getdata.execute(f'INSERT INTO akun values("{new_username}","{new_password}")')
+        connect.commit()
+    else:
+        return False
+
+
+# Account Management
 
 # def daftar(username,password):
     # os.system("cls")
@@ -248,36 +296,6 @@ def load_db():
 #     n = input("Tekan Enter Untuk Kembali Ke Menu")
 #     os.system("cls")
 #     menu()
-
-def daftar(username,password):
-    list_account.insert_at_end({"username":username,"password":password})
-    connect=sqlite3.connect(path_db)
-    getdata=connect.cursor()
-    getdata.execute(f'INSERT INTO akun values("{username}","{password}")')
-    connect.commit()
-
-def login(username,password):
-    if list_account.search_username(username) == True and list_account.search_password(password) == True:
-        print("Login Berhasil")
-        return True
-    else:
-        print("Login Gagal")
-        return False
-
-def hapus(username,password):
-    if list_account.search_username(username) == True and list_account.search_password(password) == True:
-        list_account.delete_element_by_value(username)
-        connect=sqlite3.connect(path_db)
-        getdata=connect.cursor()
-        getdata.execute(f'DELETE FROM akun WHERE username="{username}" AND password="{password}"')
-        connect.commit()
-        return True
-    else:
-        print("Akun salah")
-        return False
-
-def edit():
-    pass
 
 # def edit():
 #     os.system("cls")
