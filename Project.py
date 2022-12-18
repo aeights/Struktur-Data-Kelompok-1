@@ -264,35 +264,50 @@ def login(username,password):
         print("Login Gagal")
         return False
 
-def edit():
-    os.system("cls")
-    username = input("Masukkan Username Anda: ")
-    if list_account.search_username(username) == True:
+def hapus(username,password):
+    if list_account.search_username(username) == True and list_account.search_password(password) == True:
         list_account.delete_element_by_value(username)
-        new_username = input("Masukkan Username Baru: ")
-        new_password = input("Masukkan Password Baru: ")
-        list_account.insert_at_end({"username":new_username,"password":new_password})
-        print("Akun Berhasil Di Edit")
-    elif list_account.search_username(username) == False:
-        print("Username tidak ditemukan, Coba lagi")
-        time.sleep(2)
-        edit()
-    n = input("Tekan Enter Untuk Kembali Ke Menu")
-    os.system("cls")
-    menu()
+        connect=sqlite3.connect(path_db)
+        getdata=connect.cursor()
+        getdata.execute(f'DELETE FROM akun WHERE username="{username}" AND password="{password}"')
+        connect.commit()
+        return True
+    else:
+        print("Akun salah")
+        return False
 
-def hapus():
-    os.system("cls")
-    username = input("Masukkan Username Anda: ")
-    if list_account.search_username(username) == True:
-        list_account.delete_element_by_value(username)
-    elif list_account.search_username(username) == False:
-        print("Username tidak ditemukan, Coba lagi")
-        time.sleep(2)
-        hapus()
-    n = input("Tekan Enter Untuk Kembali Ke Menu")
-    os.system("cls")
-    menu()
+def edit():
+    pass
+
+# def edit():
+#     os.system("cls")
+#     username = input("Masukkan Username Anda: ")
+#     if list_account.search_username(username) == True:
+#         list_account.delete_element_by_value(username)
+#         new_username = input("Masukkan Username Baru: ")
+#         new_password = input("Masukkan Password Baru: ")
+#         list_account.insert_at_end({"username":new_username,"password":new_password})
+#         print("Akun Berhasil Di Edit")
+#     elif list_account.search_username(username) == False:
+#         print("Username tidak ditemukan, Coba lagi")
+#         time.sleep(2)
+#         edit()
+#     n = input("Tekan Enter Untuk Kembali Ke Menu")
+#     os.system("cls")
+#     menu()
+
+# def hapus():
+#     os.system("cls")
+#     username = input("Masukkan Username Anda: ")
+#     if list_account.search_username(username) == True:
+#         list_account.delete_element_by_value(username)
+#     elif list_account.search_username(username) == False:
+#         print("Username tidak ditemukan, Coba lagi")
+#         time.sleep(2)
+#         hapus()
+#     n = input("Tekan Enter Untuk Kembali Ke Menu")
+#     os.system("cls")
+#     menu()
 
 def show_account():
     list_account.traverse_list()

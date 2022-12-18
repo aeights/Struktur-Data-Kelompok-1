@@ -21,9 +21,24 @@ def login_user():
             user = request.form.get("u_login")
             pw = request.form.get("p_login")
             if login(user,pw) == True:
-                redirect(url_for("home"))
-                # return render_template("home.html")
+                return redirect(url_for("home"))
     return render_template("login.html")
+
+@app.route("/hapus", methods=['GET', 'POST'])
+def hapus_akun():
+    if request.method == "POST":
+        if request.form.get("u_hapus") and request.form.get("p_hapus"):
+            user = request.form.get("u_hapus")
+            pw = request.form.get("p_hapus")
+            if hapus(user,pw) == True:
+                return redirect(url_for("login_user"))
+    return render_template("hapus.html")
+
+@app.route("/edit", methods=['GET', 'POST'])
+def edit_akun():
+    if request.method == "POST":
+        print("sukses")
+    return render_template("home.html")
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
